@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animasi halus untuk elemen floating dan transisi UI */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes floatDelayed {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: floatSlow 4.5s ease-in-out infinite;
+}
+.animate-float-delayed {
+  animation: floatDelayed 5.2s ease-in-out 1.2s infinite;
+}
+/* Custom scrollbar ringan */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFBF5;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8925A;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7A0B1E;
+}

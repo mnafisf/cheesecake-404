@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cheesecake 404 — Cheesecake Lumer, Bikin Gagal Move On</title>
+  <meta name="description" content="Cheesecake 404: UMKM dessert cheesecake homemade dengan cream cheese premium. Tersedia varian Cheesecake Ori dan Cheesecake Strawberry. Pesan mudah via WhatsApp!" />
+
+  <!-- Google Fonts: Anton (Condensed Bold untuk Wordmark & Judul) & Plus Jakarta Sans (Body & UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-cream text-ink font-sans antialiased overflow-x-hidden selection:bg-maroon selection:text-cream">
+
+  <!-- ==================== TOAST NOTIFICATION (PENGGANTI ALERT) ==================== -->
+  <div id="toast-container" class="fixed top-20 right-4 left-4 sm:left-auto z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ==================== 1. NAVBAR STICKY ==================== -->
+  <header class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-cream-border/80 transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+
+        <!-- Brand Logo Bulat SVG + Wordmark Condensed -->
+        <a href="#beranda" class="flex items-center gap-3 group focus:outline-none">
+          <!-- Logo Bulat Kustom Cheesecake 404 -->
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cream border-[3.5px] border-maroon flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0">
+            <svg viewBox="0 0 100 100" class="w-10 h-10 sm:w-11 sm:h-11" aria-label="Logo Cheesecake 404">
+              <!-- Dasar Biskuit Crust -->
+              <path d="M16 66 Q50 72 84 62 L81 74 Q50 82 19 75 Z" fill="#C8925A" stroke="#9E6A36" stroke-width="2" stroke-linejoin="round" />
+              <!-- Layer Cheesecake Cream -->
+              <path d="M16 54 L84 48 L84 62 Q50 72 16 66 Z" fill="#FFF7EB" stroke="#C8925A" stroke-width="2" stroke-linejoin="round" />
+              <!-- Saus Glaze Stroberi Menetes -->
+              <path d="M15 54 Q46 30 85 45 Q87 50 82 52 L79 59 Q77 62 75 58 L74 51 Q60 54 49 54 L47 64 Q44 68 41 63 L41 55 Q30 56 22 59 Q17 62 15 54 Z" fill="#7A0B1E" />
+              <!-- Highlight Glaze -->
+              <path d="M26 48 Q45 36 68 42" fill="none" stroke="#B5223B" stroke-width="2.5" stroke-linecap="round" opacity="0.8" />
+              <!-- Potongan Stroberi 1 -->
+              <path d="M46 34 C41 34 39 42 44 47 C47 49 52 47 54 42 C55 37 51 34 46 34 Z" fill="#D92B4B" />
+              <!-- Potongan Stroberi 2 -->
+              <path d="M56 35 C52 36 51 43 55 47 C58 49 63 46 64 41 C64 36 60 34 56 35 Z" fill="#E63956" />
+              <!-- Biji Stroberi -->
+              <circle cx="45" cy="40" r="1" fill="#FFD6DC" />
+              <circle cx="48" cy="43" r="1" fill="#FFD6DC" />
+              <circle cx="57" cy="40" r="1" fill="#FFD6DC" />
+              <circle cx="60" cy="43" r="1" fill="#FFD6DC" />
+              <!-- Daun Stroberi -->
+              <path d="M45 35 L49 30 L53 34 L57 30 L59 35 Q52 37 45 35 Z" fill="#3D8B40" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display text-2xl sm:text-3xl tracking-wide text-maroon leading-none uppercase">
+              CHEESECAKE 404
+            </span>
+            <span class="text-[11px] font-semibold tracking-widest uppercase text-crust mt-0.5">
+              Homemade Dessert
+            </span>
+          </div>
+        </a>
+
+        <!-- Menu Navigasi Desktop -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-ink/80">
+          <a href="#beranda" class="hover:text-maroon transition-colors">Beranda</a>
+          <a href="#menu" class="hover:text-maroon transition-colors">Menu</a>
+          <a href="#keunggulan" class="hover:text-maroon transition-colors">Keunggulan</a>
+          <a href="#cara-pesan" class="hover:text-maroon transition-colors">Cara Pesan</a>
+        </nav>
+
+        <!-- Tombol Keranjang & CTA Order WA -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Tombol Buka Keranjang -->
+          <button
+            id="open-cart-btn"
+            type="button"
+            aria-label="Buka Keranjang Belanja"
+            class="relative p-2.5 sm:px-3.5 sm:py-2.5 rounded-xl bg-cream-soft hover:bg-maroon/10 text-maroon border border-cream-border transition-all flex items-center gap-2 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span class="hidden sm:inline text-sm font-bold">Keranjang</span>
+            <span
+              id="cart-badge"
+              class="min-w-[22px] h-[22px] px-1.5 rounded-full bg-maroon text-cream text-xs font-bold flex items-center justify-center transition-transform"
+            >0</span>
+          </button>
+
+          <!-- Tombol CTA Order WA Desktop -->
+          <a
+            href="#cara-pesan"
+            class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-maroon hover:bg-maroon-dark text-cream text-sm font-bold shadow-maroon transition-all hover:-translate-y-0.5"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.52 3.48A11.86 11.86 0 0012.06 0C5.46 0 .1 5.36.1 11.96c0 2.1.55 4.16 1.6 5.98L0 24l6.24-1.64a11.9 11.9 0 005.82 1.48h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.2-3.51-8.4zM12.07 21.8h-.01a9.86 9.86 0 01-5.03-1.38l-.36-.21-3.7.97.99-3.6-.23-.37a9.83 9.83 0 01-1.51-5.25c0-5.44 4.43-9.87 9.87-9.87 2.64 0 5.12 1.03 6.98 2.9a9.81 9.81 0 012.88 6.98c0 5.44-4.43 9.83-9.88 9.83zm5.41-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
+            </svg>
+            <span>Order WA</span>
+          </a>
+
+          <!-- Tombol Hamburger Mobile -->
+          <button
+            id="mobile-menu-btn"
+            type="button"
+            aria-label="Buka Menu Navigasi"
+            class="md:hidden p-2.5 rounded-xl bg-cream-soft text-maroon border border-cream-border hover:bg-maroon/10 transition-colors"
+          >
+            <svg id="hamburger-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-cream border-t border-cream-border px-4 pt-2 pb-5 space-y-2 shadow-lg">
+      <a href="#beranda" class="mobile-nav-link block px-4 py-3 rounded-xl font-semibold text-ink hover:bg-cream-soft hover:text-maroon">Beranda</a>
+      <a href="#menu" class="mobile-nav-link block px-4 py-3 rounded-xl font-semibold text-ink hover:bg-cream-soft hover:text-maroon">Menu Cheesecake</a>
+      <a href="#keunggulan" class="mobile-nav-link block px-4 py-3 rounded-xl font-semibold text-ink hover:bg-cream-soft hover:text-maroon">Keunggulan</a>
+      <a href="#cara-pesan" class="mobile-nav-link block px-4 py-3 rounded-xl font-semibold text-ink hover:bg-cream-soft hover:text-maroon">Cara Pesan &amp; Form WA</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section id="beranda" class="relative overflow-hidden pt-10 pb-16 sm:pt-16 sm:pb-24">
+      <!-- Dekorasi Latar Halus -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-maroon/5 blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 -left-24 w-80 h-80 rounded-full bg-crust/15 blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+          <!-- Kolom Kiri: Copywriting & CTA -->
+          <div class="lg:col-span-6 text-center lg:text-left">
+            <!-- Badge Playful -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-maroon/10 border border-maroon/20 text-maroon text-xs sm:text-sm font-extrabold tracking-wider uppercase mb-6">
+              <span class="w-2 h-2 rounded-full bg-strawberry animate-pulse"></span>
+              <span>ERROR 404: DIET NOT FOUND</span>
+            </div>
+
+            <!-- Headline Utama -->
+            <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl text-maroon leading-[1.03] tracking-wide uppercase mb-6">
+              CHEESECAKE LUMER,<br />
+              <span class="text-ink">BIKIN GAGAL</span> <span class="text-strawberry">MOVE ON.</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-base sm:text-lg text-ink/80 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+              Dibuat <strong class="text-maroon">fresh setiap hari</strong> dengan cream cheese pilihan yang lembut, creamy, dan dasar biskuit mentega renyah. Nikmati dessert berkualitas kafe dengan harga ramah di kantong mulai <strong class="text-maroon">Rp15.000/potong</strong>!
+            </p>
+
+            <!-- Tombol CTA -->
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <a
+                href="#menu"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-maroon hover:bg-maroon-dark text-cream font-bold text-base shadow-maroon transition-all hover:-translate-y-0.5"
+              >
+                <span>Lihat Menu</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+
+              <button
+                type="button"
+                onclick="quickChatWhatsApp()"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-cream-soft hover:bg-maroon/10 text-maroon border-2 border-maroon/25 font-bold text-base transition-all hover:-translate-y-0.5 cursor-pointer"
+              >
+                <svg class="w-5 h-5 fill-current text-maroon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.52 3.48A11.86 11.86 0 0012.06 0C5.46 0 .1 5.36.1 11.96c0 2.1.55 4.16 1.6 5.98L0 24l6.24-1.64a11.9 11.9 0 005.82 1.48h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.2-3.51-8.4zM12.07 21.8h-.01a9.86 9.86 0 01-5.03-1.38l-.36-.21-3.7.97.99-3.6-.23-.37a9.83 9.83 0 01-1.51-5.25c0-5.44 4.43-9.87 9.87-9.87 2.64 0 5.12 1.03 6.98 2.9a9.81 9.81 0 012.88 6.98c0 5.44-4.43 9.83-9.88 9.83zm5.41-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
+                </svg>
+                <span>Pesan via WhatsApp</span>
+              </button>
+            </div>
+
+            <!-- Info Singkat -->
+            <div class="mt-9 pt-7 border-t border-cream-border flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-ink/75 font-medium">
+              <div class="flex items-center gap-2">
+                <span class="text-maroon font-extrabold text-base">100%</span>
+                <span>Halal &amp; Homemade</span>
+              </div>
+              <div class="w-1.5 h-1.5 rounded-full bg-crust"></div>
+              <div class="flex items-center gap-2">
+                <span class="text-maroon font-extrabold text-base">2 Varian</span>
+                <span>Signature Favorit</span>
+              </div>
+              <div class="w-1.5 h-1.5 rounded-full bg-crust"></div>
+            </div>
+          </div>
+
+          <!-- Kolom Kanan: Kartu Visual Artistik + Ilustrasi SVG Cheesecake -->
+          <div class="lg:col-span-6 flex justify-center">
+            <div class="relative w-full max-w-md sm:max-w-lg">
+              <!-- Kartu Visual Utama -->
+              <div class="relative rounded-[2.25rem] bg-gradient-to-br from-maroon via-maroon to-maroon-dark p-6 sm:p-8 shadow-soft border-4 border-cream-soft overflow-hidden">
+                <!-- Pola Lingkaran Artistik di Belakang -->
+                <div class="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-cream/10"></div>
+                <div class="absolute -bottom-16 -left-16 w-56 h-56 rounded-full bg-strawberry/20"></div>
+
+                <!-- Lingkaran Krem Seperti Badge Logo -->
+                <div class="relative bg-cream rounded-full aspect-square flex flex-col items-center justify-center p-6 sm:p-8 border-[6px] border-cream-soft shadow-inner">
+                  <!-- Ilustrasi SVG Cheesecake Stroberi Besar & Menggugah Selera -->
+                  <svg viewBox="0 0 280 220" class="w-full max-w-[260px] drop-shadow-lg animate-float" role="img" aria-label="Ilustrasi Cheesecake Strawberry Lumer">
+                    <defs>
+                      <linearGradient id="heroCrust" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#B97D45" />
+                        <stop offset="50%" stop-color="#D49D66" />
+                        <stop offset="100%" stop-color="#A86E38" />
+                      </linearGradient>
+                      <linearGradient id="heroCheese" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#FFFDF8" />
+                        <stop offset="100%" stop-color="#F6E5CF" />
+                      </linearGradient>
+                      <linearGradient id="heroGlaze" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#A4132C" />
+                        <stop offset="55%" stop-color="#7A0B1E" />
+                        <stop offset="100%" stop-color="#530512" />
+                      </linearGradient>
+                      <linearGradient id="berryGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#F24362" />
+                        <stop offset="100%" stop-color="#B81635" />
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Bayangan Piring -->
+                    <ellipse cx="142" cy="188" rx="108" ry="18" fill="#E8D8C6" />
+                    <ellipse cx="142" cy="184" rx="92" ry="12" fill="#FFFBF5" stroke="#DFCBB5" stroke-width="2" />
+
+                    <!-- Crust Bawah & Samping Belakang -->
+                    <path d="M36 146 Q140 164 242 140 L236 164 Q140 184 42 164 Z" fill="url(#heroCrust)" stroke="#8F5B2B" stroke-width="2.5" stroke-linejoin="round" />
+                    <!-- Remahan Biskuit -->
+                    <circle cx="72" cy="158" r="2" fill="#8F5B2B" opacity="0.6" />
+                    <circle cx="118" cy="166" r="2.2" fill="#8F5B2B" opacity="0.6" />
+                    <circle cx="164" cy="165" r="1.8" fill="#8F5B2B" opacity="0.6" />
+                    <circle cx="206" cy="155" r="2" fill="#8F5B2B" opacity="0.6" />
+
+                    <!-- Sisi Samping Crust Belakang -->
+                    <path d="M232 95 Q246 105 242 140 L234 142 Q237 110 226 100 Z" fill="#C8925A" stroke="#8F5B2B" stroke-width="2" />
+
+                    <!-- Badan Cheesecake Creamy -->
+                    <path d="M36 112 L236 96 L242 140 Q140 164 36 146 Z" fill="url(#heroCheese)" stroke="#D9B48A" stroke-width="2" stroke-linejoin="round" />
+                    <!-- Tekstur Lembut Cheesecake -->
+                    <path d="M62 135 Q138 148 214 132" fill="none" stroke="#E8D2B5" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+
+                    <!-- Topping Saus Glaze Stroberi Menetes -->
+                    <path d="M32 112 Q115 56 238 94 Q246 100 236 109 L229 128 Q225 136 220 127 L218 111 Q194 114 176 115 L172 134 Q167 143 161 134 L160 117 Q132 120 112 121 L108 145 Q102 155 96 144 L96 121 Q66 122 46 127 Q32 132 28 122 Q26 116 32 112 Z" fill="url(#heroGlaze)" />
+
+                    <!-- Kilau Glossy Glaze -->
+                    <path d="M56 102 Q112 68 178 82" fill="none" stroke="#E04662" stroke-width="4.5" stroke-linecap="round" opacity="0.65" />
+                    <ellipse cx="101" cy="136" rx="2.5" ry="5" fill="#E04662" opacity="0.65" />
+                    <ellipse cx="166" cy="128" rx="2" ry="4" fill="#E04662" opacity="0.65" />
+
+                    <!-- Potongan Buah Stroberi 1 (Kiri) -->
+                    <g transform="translate(108, 44) rotate(-14)">
+                      <path d="M20 8 C6 8 0 24 8 38 C14 48 28 48 35 38 C43 24 34 8 20 8 Z" fill="url(#berryGrad)" stroke="#7A0B1E" stroke-width="2" />
+                      <circle cx="14" cy="21" r="1.4" fill="#FFD6DC" />
+                      <circle cx="23" cy="20" r="1.4" fill="#FFD6DC" />
+                      <circle cx="18" cy="29" r="1.4" fill="#FFD6DC" />
+                      <circle cx="27" cy="29" r="1.4" fill="#FFD6DC" />
+                      <circle cx="21" cy="37" r="1.4" fill="#FFD6DC" />
+                      <!-- Daun Stroberi -->
+                      <path d="M8 10 L16 2 L21 8 L28 1 L32 10 Q20 14 8 10 Z" fill="#3B8E3E" stroke="#246126" stroke-width="1.2" />
+                    </g>
+
+                    <!-- Potongan Buah Stroberi 2 (Kanan) -->
+                    <g transform="translate(142, 48) rotate(16)">
+                      <path d="M18 8 C6 8 2 22 9 35 C14 44 26 44 32 35 C39 22 30 8 18 8 Z" fill="url(#berryGrad)" stroke="#7A0B1E" stroke-width="2" />
+                      <circle cx="13" cy="20" r="1.3" fill="#FFD6DC" />
+                      <circle cx="22" cy="19" r="1.3" fill="#FFD6DC" />
+                      <circle cx="17" cy="28" r="1.3" fill="#FFD6DC" />
+                      <circle cx="24" cy="29" r="1.3" fill="#FFD6DC" />
+                      <!-- Daun Stroberi -->
+                      <path d="M8 10 L14 3 L19 8 L25 2 L29 10 Q18 14 8 10 Z" fill="#46A149" stroke="#246126" stroke-width="1.2" />
+                    </g>
+                  </svg>
+
+                  <div class="text-center mt-1">
+                    <p class="font-display text-2xl sm:text-3xl text-maroon tracking-wide uppercase leading-none">CHEESECAKE 404</p>
+                    <p class="text-xs font-bold text-crust tracking-widest uppercase mt-1">Signature Slice</p>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- Floating Badge 2: Harga Mulai -->
+              <div class="animate-float absolute -bottom-4 -right-2 sm:-right-5 bg-cream px-4 py-3 rounded-2xl shadow-card border border-cream-border flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-maroon text-cream flex items-center justify-center font-display text-lg">
+                  Rp
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold text-ink/65 uppercase tracking-wide">Mulai dari</p>
+                  <p class="text-base font-extrabold text-maroon leading-tight">Rp15.000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. SECTION KEUNGGULAN ==================== -->
+    <section id="keunggulan" class="py-16 sm:py-20 bg-cream-soft/75 border-y border-cream-border/70">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs font-extrabold uppercase tracking-widest mb-3">
+            Kenapa Cheesecake 404?
+          </span>
+          <h2 class="font-display text-4xl sm:text-5xl text-maroon uppercase tracking-wide">
+            RASA PREMIUM, HARGA BERSAHABAT
+          </h2>
+          <p class="text-ink/75 mt-3 text-sm sm:text-base">
+            Setiap potongan kami racik dengan takaran pas agar teksturnya lembut, tidak bikin enek, dan selalu bikin kangen.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Kartu 1 -->
+          <div class="bg-cream p-6 rounded-3xl border border-cream-border shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-maroon/10 text-maroon flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-extrabold text-maroon mb-2">Cream Cheese Premium</h3>
+            <p class="text-sm text-ink/75 leading-relaxed">
+              Menggunakan cream cheese berkualitas tinggi sehingga teksturnya super lembut, creamy, dan lumer di setiap suapan.
+            </p>
+          </div>
+
+          <!-- Kartu 2 -->
+          <div class="bg-cream p-6 rounded-3xl border border-cream-border shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-crust/20 text-maroon flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-extrabold text-maroon mb-2">Fresh Homemade</h3>
+            <p class="text-sm text-ink/75 leading-relaxed">
+              Diproduksi rumahan secara higienis dan segar setiap hari tanpa bahan pengawet, menjaga kualitas rasa tetap maksimal.
+            </p>
+          </div>
+
+          <!-- Kartu 3 -->
+          <div class="bg-cream p-6 rounded-3xl border border-cream-border shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-strawberry/15 text-strawberry flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-extrabold text-maroon mb-2">Topping Stroberi Asli</h3>
+            <p class="text-sm text-ink/75 leading-relaxed">
+              Saus stroberi homemade dari buah stroberi asli yang manis-segar, bukan sekadar perisa buatan, bikin rasa makin seimbang.
+            </p>
+          </div>
+
+          <!-- Kartu 4 -->
+          <div class="bg-cream p-6 rounded-3xl border border-cream-border shadow-sm hover:shadow-card hover:-translate-y-1 transition-all duration-300">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-600/15 text-emerald-700 flex items-center justify-center mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-extrabold text-maroon mb-2">Pesan Cepat via WA</h3>
+            <p class="text-sm text-ink/75 leading-relaxed">
+              Pilih varian, atur jumlahnya, lalu klik kirim. Format pesanan otomatis rapi dan langsung terhubung ke WhatsApp kami.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. SECTION MENU (2 VARIAN UTAMA) ==================== -->
+    <section id="menu" class="py-16 sm:py-24">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs font-extrabold uppercase tracking-widest mb-3">
+            Menu Pilihan Kami
+          </span>
+          <h2 class="font-display text-4xl sm:text-5xl text-maroon uppercase tracking-wide">
+            DUA VARIAN SIGNATURE
+          </h2>
+          <p class="text-ink/75 mt-3 text-sm sm:text-base">
+            Fokus pada dua varian terbaik agar setiap potongannya selalu sempurna. Pilih favoritmu sekarang!
+          </p>
+        </div>
+
+        <!-- Grid 2 Kartu Menu Besar -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+
+          <!-- ===== MENU 1: CHEESECAKE ORI ===== -->
+          <article class="group bg-cream rounded-[2rem] border-2 border-cream-border shadow-card hover:border-maroon/40 transition-all duration-300 overflow-hidden flex flex-col">
+            <!-- Area Visual Produk SVG -->
+            <div class="relative bg-gradient-to-br from-cream-soft via-[#F5E6D3] to-[#EED7BC] p-8 flex items-center justify-center min-h-[250px] overflow-hidden">
+              <div class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-cream/95 text-maroon text-xs font-extrabold tracking-wide shadow-sm border border-cream-border">
+                ✨ Classic Choice
+              </div>
+              <!-- Ilustrasi SVG Cheesecake Ori -->
+              <svg viewBox="0 0 260 190" class="w-60 h-auto drop-shadow-md group-hover:scale-105 transition-transform duration-500" role="img" aria-label="Cheesecake Ori">
+                <defs>
+                  <linearGradient id="oriTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFF9EC" />
+                    <stop offset="60%" stop-color="#F6DFB8" />
+                    <stop offset="100%" stop-color="#E2B97F" />
+                  </linearGradient>
+                  <linearGradient id="oriSide" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#FFFDF7" />
+                    <stop offset="100%" stop-color="#F7E7CE" />
+                  </linearGradient>
+                  <linearGradient id="oriCrust" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#B6793F" />
+                    <stop offset="50%" stop-color="#D49B62" />
+                    <stop offset="100%" stop-color="#9E6530" />
+                  </linearGradient>
+                </defs>
+                <!-- Piring -->
+                <ellipse cx="130" cy="158" rx="96" ry="16" fill="#E3CEB6" />
+                <ellipse cx="130" cy="154" rx="82" ry="11" fill="#FFFBF5" stroke="#D9C1A6" stroke-width="1.5" />
+                <!-- Crust Biskuit -->
+                <path d="M36 122 Q130 138 224 116 L218 138 Q130 156 42 138 Z" fill="url(#oriCrust)" stroke="#8B5626" stroke-width="2" stroke-linejoin="round" />
+                <!-- Badan Cheesecake Creamy -->
+                <path d="M36 86 L220 74 L224 116 Q130 138 36 122 Z" fill="url(#oriSide)" stroke="#D9B48A" stroke-width="2" stroke-linejoin="round" />
+                <!-- Bagian Atas Cheesecake Golden Creamy -->
+                <path d="M36 86 Q116 42 220 74 Q146 92 36 86 Z" fill="url(#oriTop)" stroke="#D9B48A" stroke-width="2" stroke-linejoin="round" />
+                <!-- Swirl Krim Vanilla di Atas -->
+                <path d="M124 62 C118 52 132 45 138 52 C144 45 156 54 148 63 C140 69 128 68 124 62 Z" fill="#FFFDF9" stroke="#E5C89F" stroke-width="1.5" />
+                <path d="M132 54 C132 47 140 44 142 50" fill="none" stroke="#E5C89F" stroke-width="1.5" stroke-linecap="round" />
+                <!-- Daun Mint Kecil -->
+                <path d="M148 52 Q160 44 164 52 Q156 59 148 52 Z" fill="#469B49" />
+                <!-- Taburan Crumble -->
+                <circle cx="84" cy="76" r="2.2" fill="#C8925A" />
+                <circle cx="96" cy="72" r="1.8" fill="#C8925A" />
+                <circle cx="174" cy="70" r="2.2" fill="#C8925A" />
+                <circle cx="184" cy="75" r="1.7" fill="#C8925A" />
+              </svg>
+            </div>
+
+            <!-- Konten Detail Menu -->
+            <div class="p-6 sm:p-8 flex-1 flex flex-col">
+              <div class="flex items-start justify-between gap-4 mb-3">
+                <h3 class="font-display text-3xl text-maroon uppercase tracking-wide leading-tight">
+                  Cheesecake Ori
+                </h3>
+                <div class="text-right shrink-0">
+                  <span class="block text-xl sm:text-2xl font-extrabold text-maroon">Rp15.000</span>
+                  <span class="text-xs font-semibold text-ink/60">/ potong</span>
+                </div>
+              </div>
+
+              <p class="text-sm sm:text-base text-ink/75 leading-relaxed mb-6 flex-1">
+                Kelembutan cheesecake klasik dengan cream cheese pilihan yang creamy dan lumer di mulut, dipadukan dasar biskuit mentega yang gurih.
+              </p>
+          </article>
+
+          <!-- ===== MENU 2: CHEESECAKE STRAWBERRY ===== -->
+          <article class="group bg-cream rounded-[2rem] border-2 border-maroon/35 shadow-soft hover:border-maroon transition-all duration-300 overflow-hidden flex flex-col relative">
+            <!-- Area Visual Produk SVG -->
+            <div class="relative bg-gradient-to-br from-[#FCE8EC] via-[#F9D7DF] to-[#F3C2CE] p-8 flex items-center justify-center min-h-[250px] overflow-hidden">
+              <!-- Badge Favorit -->
+              <div class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-maroon text-cream text-xs font-extrabold tracking-wide shadow-md flex items-center gap-1.5">
+                <span>🍓</span>
+                <span>Favorit</span>
+              </div>
+
+              <!-- Ilustrasi SVG Cheesecake Strawberry -->
+              <svg viewBox="0 0 260 190" class="w-60 h-auto drop-shadow-md group-hover:scale-105 transition-transform duration-500" role="img" aria-label="Cheesecake Strawberry">
+                <defs>
+                  <linearGradient id="strawCrust" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#B6793F" />
+                    <stop offset="50%" stop-color="#D49B62" />
+                    <stop offset="100%" stop-color="#9E6530" />
+                  </linearGradient>
+                  <linearGradient id="strawCheese" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#FFFDF8" />
+                    <stop offset="100%" stop-color="#F7E6D1" />
+                  </linearGradient>
+                  <linearGradient id="strawGlaze" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#C81D3B" />
+                    <stop offset="55%" stop-color="#7A0B1E" />
+                    <stop offset="100%" stop-color="#560613" />
+                  </linearGradient>
+                </defs>
+                <!-- Piring -->
+                <ellipse cx="130" cy="158" rx="96" ry="16" fill="#E6BCC7" />
+                <ellipse cx="130" cy="154" rx="82" ry="11" fill="#FFFBF5" stroke="#E4C8D0" stroke-width="1.5" />
+                <!-- Crust Biskuit -->
+                <path d="M36 122 Q130 138 224 116 L218 138 Q130 156 42 138 Z" fill="url(#strawCrust)" stroke="#8B5626" stroke-width="2" stroke-linejoin="round" />
+                <!-- Badan Cheesecake -->
+                <path d="M36 88 L220 76 L224 116 Q130 138 36 122 Z" fill="url(#strawCheese)" stroke="#D9B48A" stroke-width="2" stroke-linejoin="round" />
+                <!-- Glaze Stroberi Menetes -->
+                <path d="M32 88 Q114 40 222 74 Q228 80 220 88 L213 105 Q209 112 204 104 L203 90 Q180 94 162 94 L158 111 Q154 118 149 110 L148 96 Q124 98 104 99 L100 119 Q95 128 90 118 L90 99 Q62 100 44 104 Q32 108 29 98 Q28 92 32 88 Z" fill="url(#strawGlaze)" />
+                <!-- Highlight Glaze -->
+                <path d="M56 78 Q110 50 172 64" fill="none" stroke="#EA4B68" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+                <!-- Buah Stroberi 1 -->
+                <g transform="translate(102, 34) rotate(-14)">
+                  <path d="M18 6 C6 6 2 20 9 32 C14 40 25 40 31 32 C37 20 30 6 18 6 Z" fill="#E63253" stroke="#7A0B1E" stroke-width="1.8" />
+                  <circle cx="13" cy="18" r="1.2" fill="#FFD6DC" />
+                  <circle cx="22" cy="17" r="1.2" fill="#FFD6DC" />
+                  <circle cx="17" cy="26" r="1.2" fill="#FFD6DC" />
+                  <path d="M8 8 L14 2 L19 7 L25 1 L28 8 Q18 12 8 8 Z" fill="#3B8E3E" />
+                </g>
+                <!-- Buah Stroberi 2 -->
+                <g transform="translate(134, 38) rotate(14)">
+                  <path d="M16 6 C6 6 2 18 8 29 C13 36 22 36 28 29 C33 18 26 6 16 6 Z" fill="#F04362" stroke="#7A0B1E" stroke-width="1.8" />
+                  <circle cx="12" cy="17" r="1.2" fill="#FFD6DC" />
+                  <circle cx="20" cy="16" r="1.2" fill="#FFD6DC" />
+                  <circle cx="16" cy="24" r="1.2" fill="#FFD6DC" />
+                  <path d="M7 8 L13 2 L17 7 L22 2 L25 8 Q16 11 7 8 Z" fill="#46A149" />
+                </g>
+              </svg>
+            </div>
+
+            <!-- Konten Detail Menu -->
+            <div class="p-6 sm:p-8 flex-1 flex flex-col">
+              <div class="flex items-start justify-between gap-4 mb-3">
+                <h3 class="font-display text-3xl text-maroon uppercase tracking-wide leading-tight">
+                  Cheesecake Strawberry
+                </h3>
+                <div class="text-right shrink-0">
+                  <span class="block text-xl sm:text-2xl font-extrabold text-maroon">Rp17.000</span>
+                  <span class="text-xs font-semibold text-ink/60">/ potong</span>
+                </div>
+              </div>
+
+              <p class="text-sm sm:text-base text-ink/75 leading-relaxed mb-6 flex-1">
+                Cheesecake lembut dengan siraman saus stroberi homemade yang manis-segar serta topping potongan buah stroberi asli.
+              </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. CARA PESAN & FORM PEMESANAN WHATSAPP ==================== -->
+    <section id="cara-pesan" class="py-16 sm:py-24 bg-cream-soft/80 border-t border-cream-border/80">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header Cara Pesan -->
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs font-extrabold uppercase tracking-widest mb-3">
+            Praktis &amp; Cepat
+          </span>
+          <h2 class="font-display text-4xl sm:text-5xl text-maroon uppercase tracking-wide">
+            CARA PESAN VIA WHATSAPP
+          </h2>
+          <p class="text-ink/75 mt-3 text-sm sm:text-base">
+            Cukup 3 langkah mudah, cheesecake lumer siap meluncur atau diambil di tempat!
+          </p>
+        </div>
+
+        <!-- Langkah 1-2-3 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+          <div class="bg-cream rounded-3xl p-6 border border-cream-border flex items-start gap-4">
+            <div class="w-11 h-11 rounded-2xl bg-maroon text-cream font-display text-2xl flex items-center justify-center shrink-0">1</div>
+            <div>
+              <h3 class="font-extrabold text-maroon text-base mb-1">Pilih Menu &amp; Jumlah</h3>
+              <p class="text-sm text-ink/75">Atur jumlah Cheesecake Ori atau Strawberry sesuai selera di menu atau form bawah.</p>
+            </div>
+          </div>
+          <div class="bg-cream rounded-3xl p-6 border border-cream-border flex items-start gap-4">
+            <div class="w-11 h-11 rounded-2xl bg-maroon text-cream font-display text-2xl flex items-center justify-center shrink-0">2</div>
+            <div>
+              <h3 class="font-extrabold text-maroon text-base mb-1">Isi Data Pemesan</h3>
+              <p class="text-sm text-ink/75">Masukkan nama, pilih ambil di tempat atau delivery, serta catatan tambahan.</p>
+            </div>
+          </div>
+          <div class="bg-cream rounded-3xl p-6 border border-cream-border flex items-start gap-4">
+            <div class="w-11 h-11 rounded-2xl bg-maroon text-cream font-display text-2xl flex items-center justify-center shrink-0">3</div>
+            <div>
+              <h3 class="font-extrabold text-maroon text-base mb-1">Kirim ke WhatsApp</h3>
+              <p class="text-sm text-ink/75">Klik tombol kirim, pesan otomatis tersusun rapi dan langsung masuk ke chat WA kami.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Order Terintegrasi: Ringkasan Keranjang + Form Pemesanan -->
+        <div class="bg-cream rounded-[2rem] border-2 border-cream-border shadow-card overflow-hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12">
+
+            <!-- Kiri: Ringkasan Keranjang Belanja -->
+            <div class="lg:col-span-5 bg-maroon text-cream p-6 sm:p-8 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 class="font-display text-3xl uppercase tracking-wide">Pilih Menu Pesanan</h3>
+                    <p class="text-xs text-cream/80 mt-0.5">Atur jumlah pesananmu langsung di sini</p>
+                  </div>
+                  <button
+                    type="button"
+                    onclick="clearCart()"
+                    class="text-xs font-semibold text-cream/80 hover:text-cream underline underline-offset-4 cursor-pointer"
+                  >
+                    Reset
+                  </button>
+                </div>
+
+                <!-- Daftar Item di Form Order (Selalu Menampilkan 2 Menu agar Praktis) -->
+                <div id="order-items-list" class="space-y-4">
+                  <!-- Diisi otomatis oleh JavaScript -->
+                </div>
+              </div>
+
+              <!-- Total Harga -->
+              <div class="mt-8 pt-6 border-t border-cream/20">
+                <div class="flex items-center justify-between text-sm text-cream/80 mb-2">
+                  <span>Total Item</span>
+                  <span id="order-total-qty" class="font-bold text-cream">0 potong</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-base font-bold">Total Pembayaran</span>
+                  <span id="order-total-price" class="font-display text-3xl tracking-wide text-cream">Rp0</span>
+                </div>
+                <p class="text-[11px] text-cream/70 mt-2">
+                  *Ongkir (jika pilih Delivery) akan dikonfirmasi langsung oleh admin via WhatsApp.
+                </p>
+              </div>
+            </div>
+
+            <!-- Kanan: Form Input Data Pemesan -->
+            <div class="lg:col-span-7 p-6 sm:p-8 lg:p-10">
+              <h3 class="font-display text-3xl text-maroon uppercase tracking-wide mb-2">
+                Lengkapi Data Pemesan
+              </h3>
+              <p class="text-sm text-ink/70 mb-6">
+                Isi detail di bawah ini lalu klik tombol kirim untuk meneruskan pesanan ke WhatsApp Cheesecake 404.
+              </p>
+
+              <form id="whatsapp-order-form" class="space-y-5" novalidate>
+                <!-- Nama Pemesan -->
+                <div>
+                  <label for="customer-name" class="block text-sm font-bold text-ink mb-2">
+                    Nama Pemesan <span class="text-strawberry">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="customer-name"
+                    name="customerName"
+                    placeholder="Contoh: Budi Santoso"
+                    required
+                    class="w-full px-4 py-3.5 rounded-2xl bg-cream-soft/60 border border-cream-border focus:border-maroon focus:ring-2 focus:ring-maroon/20 focus:outline-none text-ink placeholder:text-ink/40 font-medium transition-all"
+                  />
+                </div>
+
+                <!-- Metode Pengambilan -->
+                <div>
+                  <span class="block text-sm font-bold text-ink mb-2">
+                    Metode Pengambilan <span class="text-strawberry">*</span>
+                  </span>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label class="relative flex items-center gap-3 p-4 rounded-2xl border-2 border-cream-border bg-cream-soft/50 cursor-pointer hover:border-maroon/50 transition-all has-[:checked]:border-maroon has-[:checked]:bg-maroon/5">
+                      <input type="radio" name="deliveryMethod" value="Ambil di Tempat" checked class="w-4 h-4 accent-maroon" />
+                      <div>
+                        <span class="block text-sm font-bold text-ink">Ambil di Tempat</span>
+                        <span class="block text-xs text-ink/60">Self-pickup ke outlet</span>
+                      </div>
+                    </label>
+                    <label class="relative flex items-center gap-3 p-4 rounded-2xl border-2 border-cream-border bg-cream-soft/50 cursor-pointer hover:border-maroon/50 transition-all has-[:checked]:border-maroon has-[:checked]:bg-maroon/5">
+                      <input type="radio" name="deliveryMethod" value="Delivery" class="w-4 h-4 accent-maroon" />
+                      <div>
+                        <span class="block text-sm font-bold text-ink">Delivery</span>
+                        <span class="block text-xs text-ink/60">Diantar ke alamatmu</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Alamat / Catatan Tambahan -->
+                <div>
+                  <label for="customer-notes" class="block text-sm font-bold text-ink mb-2">
+                    Alamat / Catatan Tambahan
+                  </label>
+                  <textarea
+                    id="customer-notes"
+                    name="customerNotes"
+                    rows="3"
+                    placeholder="Tulis alamat lengkap (jika Delivery), jam pengambilan, atau catatan khusus (misal: sendok tambahan, kartu ucapan)..."
+                    class="w-full px-4 py-3.5 rounded-2xl bg-cream-soft/60 border border-cream-border focus:border-maroon focus:ring-2 focus:ring-maroon/20 focus:outline-none text-ink placeholder:text-ink/40 font-medium transition-all resize-none"
+                  ></textarea>
+                </div>
+
+                <!-- Tombol Submit ke WhatsApp -->
+                <button
+                  type="submit"
+                  class="w-full py-4 px-6 rounded-2xl bg-maroon hover:bg-maroon-dark text-cream font-extrabold text-base shadow-maroon transition-all hover:-translate-y-0.5 flex items-center justify-center gap-3 cursor-pointer"
+                >
+                  <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.52 3.48A11.86 11.86 0 0012.06 0C5.46 0 .1 5.36.1 11.96c0 2.1.55 4.16 1.6 5.98L0 24l6.24-1.64a11.9 11.9 0 005.82 1.48h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.2-3.51-8.4zM12.07 21.8h-.01a9.86 9.86 0 01-5.03-1.38l-.36-.21-3.7.97.99-3.6-.23-.37a9.83 9.83 0 01-1.51-5.25c0-5.44 4.43-9.87 9.87-9.87 2.64 0 5.12 1.03 6.98 2.9a9.81 9.81 0 012.88 6.98c0 5.44-4.43 9.83-9.88 9.83zm5.41-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
+                  </svg>
+                  <span>Kirim Pesanan ke WhatsApp</span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== 6. FOOTER ==================== -->
+  <footer class="bg-maroon text-cream pt-14 pb-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b border-cream/20">
+
+        <!-- Brand & Deskripsi -->
+        <div class="md:col-span-5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-cream border-2 border-cream-soft flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 100 100" class="w-9 h-9" aria-hidden="true">
+                <path d="M16 66 Q50 72 84 62 L81 74 Q50 82 19 75 Z" fill="#C8925A" />
+                <path d="M16 54 L84 48 L84 62 Q50 72 16 66 Z" fill="#FFF7EB" />
+                <path d="M15 54 Q46 30 85 45 Q87 50 82 52 L79 59 Q77 62 75 58 L74 51 Q60 54 49 54 L47 64 Q44 68 41 63 L41 55 Q30 56 22 59 Q17 62 15 54 Z" fill="#7A0B1E" />
+                <circle cx="48" cy="40" r="6" fill="#D92B4B" />
+                <circle cx="58" cy="41" r="5" fill="#E63956" />
+              </svg>
+            </div>
+            <div>
+              <span class="font-display text-3xl tracking-wide uppercase block leading-none">CHEESECAKE 404</span>
+              <span class="text-xs text-cream/75 font-semibold tracking-widest uppercase">Error 404: Diet Not Found</span>
+            </div>
+          </div>
+          <p class="text-sm text-cream/80 leading-relaxed max-w-sm">
+            UMKM dessert lokal yang menghadirkan cheesecake homemade lumer dengan cream cheese premium dan topping stroberi segar. Cocok untuk teman santai, kado, hingga acara spesial.
+          </p>
+        </div>
+
+        <!-- Jam Operasional -->
+        <div class="md:col-span-3">
+          <h4 class="font-display text-xl uppercase tracking-wide mb-4 text-cream">Jam Operasional</h4>
+          <ul class="space-y-2 text-sm text-cream/80">
+            <li class="flex justify-between gap-2">
+              <span>Senin – Jumat</span>
+              <span class="font-bold text-cream">10.00 – 20.00</span>
+            </li>
+            <li class="flex justify-between gap-2">
+              <span>Sabtu – Minggu</span>
+              <span class="font-bold text-cream">09.00 – 21.00</span>
+            </li>
+            <li class="pt-2 text-xs text-cream/70">
+              *Open Pre-Order &amp; Ready Stock setiap hari selama persediaan masih ada.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Info Kontak & Navigasi -->
+        <div class="md:col-span-4">
+          <h4 class="font-display text-xl uppercase tracking-wide mb-4 text-cream">Hubungi Kami</h4>
+          <ul class="space-y-2.5 text-sm text-cream/85">
+            <li class="flex items-center gap-2.5">
+              <span>📍</span>
+              <span>Dapur Produksi Cheesecake 404 (Pickup &amp; Delivery Area Lokal)</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span>📱</span>
+              <button type="button" onclick="quickChatWhatsApp()" class="hover:underline font-semibold cursor-pointer">
+                WhatsApp Official Cheesecake 404
+              </button>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span>🍰</span>
+              <span>Cheesecake Ori (Rp15k) &amp; Strawberry (Rp17k)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/75">
+        <p>&copy; <span id="current-year"></span> Cheesecake 404. All rights reserved.</p>
+        <p>Dibuat dengan penuh cinta untuk pecinta cheesecake lokal 🍓</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== DRAWER KERANJANG BELANJA (SLIDE-OVER) ==================== -->
+  <div id="cart-drawer-overlay" class="fixed inset-0 bg-ink/50 backdrop-blur-xs z-50 hidden opacity-0 transition-opacity duration-300"></div>
+  <aside
+    id="cart-drawer"
+    aria-label="Keranjang Belanja"
+    class="fixed top-0 right-0 h-full w-full max-w-md bg-cream z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col"
+  >
+    <!-- Header Drawer -->
+    <div class="p-6 bg-maroon text-cream flex items-center justify-between">
+      <div>
+        <h3 class="font-display text-2xl uppercase tracking-wide">Keranjang Belanja</h3>
+        <p class="text-xs text-cream/80">Cheesecake 404</p>
+      </div>
+      <button
+        id="close-cart-btn"
+        type="button"
+        aria-label="Tutup Keranjang"
+        class="w-10 h-10 rounded-xl bg-cream/15 hover:bg-cream/25 flex items-center justify-center transition-colors cursor-pointer"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Isi Keranjang -->
+    <div id="drawer-cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+      <!-- Dirender lewat JavaScript -->
+    </div>
+
+    <!-- Footer Drawer -->
+    <div class="p-6 bg-cream-soft border-t border-cream-border space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-bold text-ink/75">Total Harga</span>
+        <span id="drawer-total-price" class="font-display text-3xl text-maroon">Rp0</span>
+      </div>
+      <button
+        type="button"
+        onclick="goToCheckoutForm()"
+        class="w-full py-3.5 px-5 rounded-2xl bg-maroon hover:bg-maroon-dark text-cream font-bold text-sm shadow-maroon transition-all cursor-pointer"
+      >
+        Lanjut Isi Form &amp; Pesan WA
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== FLOATING WHATSAPP BUTTON ==================== -->
+  <button
+    type="button"
+    onclick="quickChatWhatsApp()"
+    aria-label="Chat Cepat via WhatsApp"
+    class="fixed bottom-5 right-5 z-40 group flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1EB958] text-white px-4 py-3.5 rounded-full shadow-xl transition-all hover:scale-105 cursor-pointer"
+  >
+    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.52 3.48A11.86 11.86 0 0012.06 0C5.46 0 .1 5.36.1 11.96c0 2.1.55 4.16 1.6 5.98L0 24l6.24-1.64a11.9 11.9 0 005.82 1.48h.01c6.6 0 11.96-5.36 11.96-11.96 0-3.2-1.25-6.2-3.51-8.4zM12.07 21.8h-.01a9.86 9.86 0 01-5.03-1.38l-.36-.21-3.7.97.99-3.6-.23-.37a9.83 9.83 0 01-1.51-5.25c0-5.44 4.43-9.87 9.87-9.87 2.64 0 5.12 1.03 6.98 2.9a9.81 9.81 0 012.88 6.98c0 5.44-4.43 9.83-9.88 9.83zm5.41-7.39c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
+    </svg>
+    <span class="hidden sm:inline font-bold text-sm pr-1">Chat WA</span>
+  </button>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
